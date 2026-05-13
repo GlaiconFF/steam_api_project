@@ -8,11 +8,13 @@
 <body>
     <a href="/"><h1>Steam Project</h1></a>
 
-    
+    <a href="/set_language/english">🇺🇸</a>
+    <a href="/set_language/brazilian">🇧🇷</a>
+    <a href="/set_language/spanish">🇪🇸</a>
 
     <form action="/search" method="get">
-        <input type="text" name="game_name" placeholder="Search game">
-        <button type="submit">Search</button>
+        <input type="text" name="game_name" placeholder="{{translation['search_placeholder']}}">
+        <button type="submit">{{translation['search_button']}}</button>
     </form>
 
     {% if games_images %}
@@ -32,7 +34,8 @@
         <li><img src="{{ game_data.header_image }}" alt="Game Image"></li>
         <li>Name: {{ game_data.name }}</li>
         <li>Description: {{ game_data.description }}</li>
-        <li>Price: {% if game_data.is_free %} {{game_data.is_free}} {% elif game_data.not_launched %} ??? {% else %} {{ game_data.price }} {% endif %}</li>
+        <li>Price: {% if game_data.is_free %} {{translation['free_game']}} {% elif game_data.not_launched %} ??? {% else %} {{ game_data.price }} {% endif %}</li>
+        <li>Supported Languages: {{ game_data.supported_languages | safe }}</li>
         <li>Release Date: {{ game_data.release_date }}</li>
         <li>Positive Reviews: {{ game_data.positive_reviews }}</li>
         <li>Negative Reviews: {{ game_data.negative_reviews }}</li>
