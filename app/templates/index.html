@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Steam Project API</title>
+</head>
+<body>
+    <a href="/"><h1>Steam Project</h1></a>
+
+    <a href="/set_language/english">🇺🇸</a>
+    <a href="/set_language/brazilian">🇧🇷</a>
+    <a href="/set_language/spanish">🇪🇸</a>
+
+    <form action="/search" method="get">
+        <input type="text" name="game_name" placeholder="{{translation['search_placeholder']}}">
+        <button type="submit">{{ translation['search_button'] }}</button>
+    </form>
+
+    {% if error %}
+
+    {{ translation['steam_api_error'] }}
+
+    {% endif %}
+
+    {% if games_datas %}
+
+    <ul>
+        {% for id, data in games_datas.items() %}
+        <li><a href="/show_game/{{id}}">{{data['name']}}<br><img src="{{ data['image'] }}" alt="Game Image"></a></li>
+        {% endfor %}
+    </ul>
+
+    {% endif %}
+
+    {% if game_data %}
+
+    <ul>
+        <li><img src="{{ game_data.header_image }}" alt="Game Image"></li>
+        <li>{{ translation['game_name'] }}: {{ game_data.name }}</li>
+        <li>{{ translation['game_description'] }}: {{ game_data.description }}</li>
+        <li>{{ translation['game_price'] }}: {% if game_data.is_free %} {{translation['free_game']}} {% elif game_data.not_launched %} ??? {% else %} {{ game_data.price }} {% endif %}</li>
+        {% if game_data.supported_languages %} <li> {{ translation['game_supported_languages'] }}: {{ game_data.supported_languages | safe }} </li> {% endif %}
+        <li>{{ translation['game_release_date'] }}: {{ game_data.release_date }}</li>
+        <li>{{ translation['game_positive_reviews'] }}: {{ game_data.positive_reviews }}</li>
+        <li>{{ translation['game_negative_reviews'] }}: {{ game_data.negative_reviews }}</li>
+        <li>{{ translation['game_total_reviews'] }}: {{ game_data.total_reviews }}</li>
+    </ul>
+
+    {% endif %}
+
+</body>
+</html>
