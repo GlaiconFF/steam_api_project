@@ -187,11 +187,18 @@
         {% if show_tags %}
 
         <div class="tags_container">
-        {% for tag in steam_tags.values() %}
 
-            <span class="tag">{{ tag }}</span><br>
+            {% for tag in steam_tags.values() %}
 
-        {% endfor %}
+                <a href="/toggle_tag/{{ tag }}"
+                class="tag {% if tag in session.get('selected_tags', []) %}active{% endif %}">
+
+                    {{ tag }}
+
+                </a>
+
+            {% endfor %}
+
         </div>
 
         {% endif %}

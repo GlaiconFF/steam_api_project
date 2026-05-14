@@ -78,6 +78,20 @@ def show_tags():
 
     return redirect("/")
 
+@main.route("/toggle_tag/<tag>")
+def toggle_tag(tag):
+
+    selected = session.get("selected_tags", [])
+
+    if tag in selected:
+        selected.remove(tag)
+    else:
+        selected.append(tag)
+
+    session["selected_tags"] = selected
+
+    return redirect("/")
+
 @main.route("/search")
 def search():
     game_name = request.args.get("game_name")
