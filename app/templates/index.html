@@ -180,7 +180,21 @@
 
         {% else %}
 
-        {{ translation['game_tags'] }}
+        <a href="/show_tags"><h3 class="show_tags {% if show_tags %}active{% endif %}">
+            {{ translation['game_tags'] }}
+        </h3></a>
+
+        {% if show_tags %}
+
+        <div class="tags_container">
+        {% for tag in steam_tags.values() %}
+
+            <span class="tag">{{ tag }}</span><br>
+
+        {% endfor %}
+        </div>
+
+        {% endif %}
 
         {% endif %}
 

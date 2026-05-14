@@ -1,5 +1,6 @@
 from flask import Blueprint, render_template, request, session, redirect
 from .services.steam_api import choose_game, search_game
+from . import steam_tags_cache
 
 main = Blueprint("main", __name__)
 
@@ -60,10 +61,22 @@ def index():
 def inject_translation():
 
     language = session.get("language", "english")
+    steam_tags = steam_tags_cache[language]
 
     return {
-        "translation": translations[language]
+        "translation": translations[language],
+        "steam_tags": steam_tags,
+        "show_tags": session.get("show_tags", False)
     }
+
+@main.route("/show_tags")
+def show_tags():
+
+    current = session.get("show_tags", False)
+
+    session["show_tags"] = not current
+
+    return redirect("/")
 
 @main.route("/search")
 def search():
