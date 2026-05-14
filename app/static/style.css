@@ -275,3 +275,23 @@ a, button, .tag, .show_tags {
         width: 95%;
     }
 }
+
+.tag_search_input {
+
+    width: 100%;
+    max-width: 400px;
+
+    padding: 12px;
+    margin-bottom: 15px;
+
+    border: none;
+    border-radius: 10px;
+
+    outline: none;
+
+    background-color: #1b2838;
+    color: white;
+
+    font-size: 15px;
+
+}

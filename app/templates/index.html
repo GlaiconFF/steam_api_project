@@ -181,9 +181,15 @@
 
         {% else %}
 
-        <h3 class="show_tags">
-            {{ translation['game_tags'] }}
-        </h3>
+        <div>
+
+            <h3 class="show_tags">
+                {{ translation['game_tags'] }}
+            </h3>
+
+            <input type="text" id="tag_search" placeholder="{{ translation['search_tag'] }}" class="tag_search_input">
+
+        </div>
 
         <div class="tags_container">
 
@@ -207,8 +213,9 @@
 <script>
 
 const tags = document.querySelectorAll(".tag")
+const tagSearch = document.getElementById("tag_search")
 
-tags.forEach(tag => { 
+tags.forEach(tag => {
 
     tag.addEventListener("click", async () => {
 
@@ -217,6 +224,26 @@ tags.forEach(tag => {
         const tagId = tag.dataset.id
 
         await fetch(`/toggle_tag/${tagId}`)
+
+    })
+
+})
+
+tagSearch.addEventListener("input", () => {
+
+    const search = tagSearch.value.toLowerCase()
+
+    tags.forEach(tag => {
+
+        const tagName = tag.textContent.toLowerCase()
+
+        if (tagName.includes(search)) {
+            tag.style.display = "inline-block"
+        }
+
+        else {
+            tag.style.display = "none"
+        }
 
     })
 
