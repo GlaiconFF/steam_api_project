@@ -7,52 +7,114 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-    <a href="/"><h1 id="project_logo">Steam Project</h1></a>
 
-    <div id="search_div">
+    <header>
+        <a href="/" class="logo">Steam Project</a>
 
-        <a href="/set_language/english">🇺🇸</a>
-        <a href="/set_language/brazilian">🇧🇷</a>
-        <a href="/set_language/spanish">🇪🇸</a>
+        <div class="languages">
+            <a href="/set_language/english">🇺🇸</a>
+            <a href="/set_language/brazilian">🇧🇷</a>
+            <a href="/set_language/spanish">🇪🇸</a>
+        </div>
 
-        <form action="/search" method="get">
-            <input type="text" name="game_name" placeholder="{{translation['search_placeholder']}}">
-            <button type="submit">{{ translation['search_button'] }}</button>
+        <form action="/search" method="get" class="search_form">
+            <input type="text" name="game_name"
+            placeholder="{{translation['search_placeholder']}}">
+
+            <button type="submit">
+                {{ translation['search_button'] }}
+            </button>
         </form>
+    </header>
 
-    </div>
+    <main>
 
-    {% if error %}
+        {% if error %}
+            <p class="error">
+                {{ translation['steam_api_error'] }}
+            </p>
+        {% endif %}
 
-    {{ translation['steam_api_error'] }}
+        {% if games_datas %}
 
-    {% endif %}
+        <section class="games_container">
 
-    {% if games_datas %}
+            {% for id, data in games_datas.items() %}
 
-    <ul>
-        {% for id, data in games_datas.items() %}
-        <li><a href="/show_game/{{id}}">{{data['name']}}<br><img src="{{ data['image'] }}" alt="Game Image"></a></li>
-        {% endfor %}
-    </ul>
+            <a href="/show_game/{{id}}" class="game_card">
 
-    {% endif %}
+                <img src="{{ data['image'] }}" alt="Game Image">
 
-    {% if game_data %}
+                <h2>{{data['name']}}</h2>
 
-    <ul>
-        <li><img src="{{ game_data.header_image }}" alt="Game Image"></li>
-        <li>{{ translation['game_name'] }}: {{ game_data.name }}</li>
-        <li>{{ translation['game_description'] }}: {{ game_data.description }}</li>
-        <li>{{ translation['game_price'] }}: {% if game_data.is_free %} {{translation['free_game']}} {% elif game_data.not_launched %} ??? {% else %} {{ game_data.price }} {% endif %}</li>
-        {% if game_data.supported_languages %} <li> {{ translation['game_supported_languages'] }}: {{ game_data.supported_languages | safe }} </li> {% endif %}
-        <li>{{ translation['game_release_date'] }}: {{ game_data.release_date }}</li>
-        <li>{{ translation['game_positive_reviews'] }}: {{ game_data.positive_reviews }}</li>
-        <li>{{ translation['game_negative_reviews'] }}: {{ game_data.negative_reviews }}</li>
-        <li>{{ translation['game_total_reviews'] }}: {{ game_data.total_reviews }}</li>
-    </ul>
+            </a>
 
-    {% endif %}
+            {% endfor %}
+
+        </section>
+
+        {% endif %}
+
+        {% if game_data %}
+
+        <section class="game_details">
+
+            <img src="{{ game_data.header_image }}" alt="Game Image">
+
+            <div class="details_text">
+
+                <h1>{{ game_data.name }}</h1>
+
+                <p>
+                    {{ game_data.description }}
+                </p>
+
+                <div class="info">
+
+                    <p>
+                        <strong>{{ translation['game_price'] }}</strong>:
+
+                        {% if game_data.is_free %}
+                            {{translation['free_game']}}
+
+                        {% elif game_data.not_launched %}
+                            ???
+
+                        {% else %}
+                            {{ game_data.price }}
+
+                        {% endif %}
+                    </p>
+
+                    <p>
+                        <strong>{{ translation['game_release_date'] }}</strong>:
+                        {{ game_data.release_date }}
+                    </p>
+
+                    <p>
+                        <strong>{{ translation['game_positive_reviews'] }}</strong>:
+                        {{ game_data.positive_reviews }}
+                    </p>
+
+                    <p>
+                        <strong>{{ translation['game_negative_reviews'] }}</strong>:
+                        {{ game_data.negative_reviews }}
+                    </p>
+
+                    <p>
+                        <strong>{{ translation['game_total_reviews'] }}</strong>:
+                        {{ game_data.total_reviews }}
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+        {% endif %}
+
+    </main>
 
 </body>
 </html>
