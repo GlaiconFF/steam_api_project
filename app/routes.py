@@ -17,7 +17,8 @@ translations = {"english": {
                     "game_release_date": "Release Date",
                     "game_positive_reviews": "Positive Reviews",
                     "game_negative_reviews": "Negative Reviews",
-                    "game_total_reviews": "Total Reviews"
+                    "game_total_reviews": "Total Reviews",
+                    "game_tags": "Tags"
                 },
                 "brazilian": {
                     "search_placeholder": "Pesquisar jogo",
@@ -31,7 +32,8 @@ translations = {"english": {
                     "game_release_date": "Data de Lançamento",
                     "game_positive_reviews": "Avaliações Positivas",
                     "game_negative_reviews": "Avaliações Negativas",
-                    "game_total_reviews": "Total de Avaliações"
+                    "game_total_reviews": "Total de Avaliações",
+                    "game_tags": "Marcadores"
                 },
                 "spanish": {
                     "search_placeholder": "Buscar juego",
@@ -45,7 +47,8 @@ translations = {"english": {
                     "game_release_date": "Fecha de Lanzamiento",
                     "game_positive_reviews": "Reseñas Positivas",
                     "game_negative_reviews": "Reseñas Negativas",
-                    "game_total_reviews": "Reseñas Totales"
+                    "game_total_reviews": "Reseñas Totales",
+                    "game_tags": "Etiquetas"
                 }
 }
 
