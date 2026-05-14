@@ -68,6 +68,9 @@ header {
     border-radius: 10px;
     font-size: 16px;
     outline: none;
+    background-color: #1b2838;
+    color: white;
+    transition: 0.2s ease;
 }
 
 .search_form button {
@@ -193,6 +196,7 @@ header {
     display: flex;
     flex-wrap: wrap;
     gap: 10px;
+
 }
 
 .tag {
@@ -286,6 +290,7 @@ a, button, .tag, .show_tags {
 
     border: none;
     border-radius: 10px;
+    transition: 0.2s ease;
 
     outline: none;
 
@@ -294,4 +299,12 @@ a, button, .tag, .show_tags {
 
     font-size: 15px;
 
+}
+
+.game_search_input:focus {
+    box-shadow: 0 0 0 5px rgba(102, 192, 244, 0.95);
+}
+
+.tag_search_input:focus {
+    box-shadow: 0 0 0 3px rgba(102, 192, 244, 0.5);
 }
