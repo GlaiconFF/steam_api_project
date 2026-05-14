@@ -25,7 +25,9 @@ translations = {
         "game_negative_reviews": "Negative Reviews",
         "game_total_reviews": "Total Reviews",
         "game_tags": "Tags",
-        "search_tag": "Search tag..."
+        "search_tag": "Search tag",
+        "show_all_tags": "Show all",
+        "hide_all_tags": "Hide all"
     },
     "brazilian": {
         "search_placeholder": "Pesquisar jogo",
@@ -41,7 +43,9 @@ translations = {
         "game_negative_reviews": "Avaliações Negativas",
         "game_total_reviews": "Total de Avaliações",
         "game_tags": "Marcadores",
-        "search_tag": "Pesquisar marcador..."
+        "search_tag": "Pesquisar marcador",
+        "show_all_tags": "Mostrar todos",
+        "hide_all_tags": "Esconder todos"
     },
     "spanish": {
         "search_placeholder": "Buscar juego",
@@ -57,7 +61,9 @@ translations = {
         "game_negative_reviews": "Reseñas Negativas",
         "game_total_reviews": "Reseñas Totales",
         "game_tags": "Etiquetas",
-        "search_tag": "Buscar etiqueta..."
+        "search_tag": "Buscar etiqueta",
+        "show_all_tags": "Mostrar todas",
+        "hide_all_tags": "Ocultar todas"
     }
 }
 

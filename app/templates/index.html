@@ -190,9 +190,13 @@
 
             <input type="text" id="tag_search" placeholder="{{ translation['search_tag'] }}" class="tag_search_input">
 
+            <button id="show_all_tags_button" class="show_all_tags_button" data-show="{{ translation['show_all_tags'] }}" data-hide="{{ translation['hide_all_tags'] }}">
+                {{ translation['show_all_tags'] }}
+            </button>
+
         </div>
 
-        <div class="tags_container">
+        <div class="tags_container"> 
 
         {% for tag_id, tag_name in steam_tags.items() %}
 
@@ -233,6 +237,76 @@ tags.forEach(tag => {
 tagSearch.addEventListener("input", () => {
 
     const search = tagSearch.value.toLowerCase()
+
+    tags.forEach(tag => {
+
+        const tagName = tag.textContent.toLowerCase()
+
+        if (tagName.includes(search)) {
+            tag.style.display = "inline-block"
+        }
+
+        else {
+            tag.style.display = "none"
+        }
+
+    })
+
+})
+
+const showAllTagsButton = document.getElementById("show_all_tags_button")
+
+let showingAllTags = false
+
+tags.forEach(tag => {
+    tag.style.display = "none"
+})
+
+showAllTagsButton.addEventListener("click", () => {
+
+    const showText = showAllTagsButton.dataset.show
+    const hideText = showAllTagsButton.dataset.hide
+    
+    showingAllTags = !showingAllTags
+
+    if (showingAllTags) {
+
+        tags.forEach(tag => {
+            tag.style.display = "inline-block"
+        })
+
+        showAllTagsButton.textContent = hideText
+
+    }
+
+    else {
+
+        tags.forEach(tag => {
+            tag.style.display = "none"
+        })
+
+        showAllTagsButton.textContent = showText
+
+    }
+
+})
+
+tagSearch.addEventListener("input", () => {
+
+    const search = tagSearch.value.toLowerCase()
+
+    if (search === "") {
+
+        if (!showingAllTags) {
+
+            tags.forEach(tag => {
+                tag.style.display = "none"
+            })
+
+        }
+
+        return
+    }
 
     tags.forEach(tag => {
 
