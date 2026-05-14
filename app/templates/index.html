@@ -160,11 +160,12 @@
 
                     <div class="tags_container">
 
-                        {% for game_tag in game_data.tags_list %}
+                        {% for tag in game_data.tags_with_id %}
 
-                            <span class="tag">
+                            <span
+                            class="tag {% if tag.id in selected_tags %}active{% endif %}" data-id="{{ tag.id }}">
 
-                                {{ game_tag }}
+                                {{ tag.name }}
 
                             </span>
 
@@ -180,23 +181,20 @@
 
         {% else %}
 
-        <a href="/show_tags"><h3 class="show_tags {% if show_tags %}active{% endif %}">
+        <h3 class="show_tags">
             {{ translation['game_tags'] }}
-        </h3></a>
-
-        {% if show_tags %}
-
+        </h3>
 
         <div class="tags_container">
 
         {% for tag_id, tag_name in steam_tags.items() %}
 
-            <a href="/toggle_tag/{{ tag_id }}"
-            class="tag {% if tag_id in selected_tags %}active{% endif %}">
+            <div
+            class="tag {% if tag_id in selected_tags %}active{% endif %}" data-id="{{ tag_id }}">
 
                 {{ tag_name }}
 
-            </a>
+            </div>
 
         {% endfor %}
 
@@ -204,9 +202,26 @@
 
         {% endif %}
 
-        {% endif %}
-
     </main>
 
+<script>
+
+const tags = document.querySelectorAll(".tag")
+
+tags.forEach(tag => { 
+
+    tag.addEventListener("click", async () => {
+
+        tag.classList.toggle("active")
+
+        const tagId = tag.dataset.id
+
+        await fetch(`/toggle_tag/${tagId}`)
+
+    })
+
+})
+
+</script>
 </body>
 </html>

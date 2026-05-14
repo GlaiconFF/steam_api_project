@@ -67,7 +67,6 @@ def inject_translation():
     return {
         "translation": translations[language],
         "steam_tags": steam_tags_cache[language],
-        "show_tags": session.get("show_tags", False),
         "selected_tags": session.get("selected_tags", [])
     }
 
@@ -75,16 +74,6 @@ def inject_translation():
 @main.route("/")
 def index():
     return render_template("index.html")
-
-
-@main.route("/show_tags")
-def show_tags():
-
-    session["show_tags"] = not session.get("show_tags", False)
-    session.modified = True
-
-    return redirect("/")
-
 
 @main.route("/toggle_tag/<int:tag_id>")
 def toggle_tag(tag_id):
@@ -97,9 +86,9 @@ def toggle_tag(tag_id):
         selected.append(tag_id)
 
     session["selected_tags"] = selected
-    session.modified = True
 
-    return redirect("/")
+    return ""
+
 
 @main.route("/search")
 def search():
@@ -123,8 +112,25 @@ def show_game(id):
     if not game_data:
         return render_template("index.html", error=True)
 
-    return render_template("index.html", game_data=game_data)
+    steam_tags = steam_tags_cache[language]
 
+    tag_name_to_id = {
+        tag_name: tag_id
+        for tag_id, tag_name in steam_tags.items()
+    }
+
+    game_data["tags_with_id"] = []
+
+    for game_tag in game_data["tags_list"]:
+
+        tag_id = tag_name_to_id.get(game_tag)
+
+        game_data["tags_with_id"].append({
+            "id": tag_id,
+            "name": game_tag
+        })
+
+    return render_template("index.html", game_data=game_data)
 
 @main.route("/set_language/<language>")
 def set_language(language):

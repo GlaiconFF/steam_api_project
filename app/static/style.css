@@ -224,9 +224,9 @@ header {
     font-size: 20px;
     font-weight: 600;
 
-    color: #66c0f4;
-
-    border-left: 4px solid transparent;
+    color: #ffffff;
+    background: rgba(102, 192, 244, 0.15);
+    border-left: 4px solid #66c0f4;
     padding: 8px 12px;
 
     margin-bottom: 15px;
@@ -237,26 +237,8 @@ header {
     text-transform: uppercase;
     letter-spacing: 1px;
 
-    cursor: pointer;
-
     background: rgba(102, 192, 244, 0.05);
     border-radius: 6px;
-}
-
-.show_tags:hover {
-    color: #ffffff;
-    background: rgba(102, 192, 244, 0.15);
-    border-left: 4px solid #66c0f4;
-}
-
-.show_tags.active {
-    color: #ffffff;
-    background: rgba(102, 192, 244, 0.25);
-    border-left: 4px solid #66c0f4;
-}
-
-.show_tags.active:hover {
-    background: rgba(102, 192, 244, 0.35);
 }
 
 .tag.active {
