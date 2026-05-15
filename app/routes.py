@@ -147,3 +147,13 @@ def set_language(language):
     session["language"] = language
     session.modified = True
     return redirect(request.referrer or "/")
+
+@main.route("/user_tags")
+def user_tags():
+
+    return render_template("user_tags.html")
+
+@main.route("/cuser_games")
+def user_games():
+
+    return render_template("user_games.html")
