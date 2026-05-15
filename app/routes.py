@@ -141,7 +141,7 @@ def show_game(id):
             "name": game_tag
         })
 
-    return render_template("index.html", game_data=game_data)
+    return render_template("game_details.html", game_data=game_data)
 
 @main.route("/set_language/<language>")
 def set_language(language):
