@@ -81,8 +81,8 @@ def inject_translation():
 
 
 @main.route("/")
-def index():
-    return render_template("index.html")
+def home():
+    return render_template("home.html")
 
 @main.route("/toggle_tag/<int:tag_id>")
 def toggle_tag(tag_id):
@@ -105,10 +105,8 @@ def search():
     games_datas = choose_game(game_name)
 
     if not games_datas:
-        print('a')
-        return render_template("index.html", error=True)
+        return render_template("home.html", error=True)
 
-    print('b')
     return render_template("search_results.html", games_datas=games_datas)
 
 
@@ -121,7 +119,7 @@ def show_game(id):
     game_data = search_game(id, language, currency) or {}
 
     if not game_data:
-        return render_template("index.html", error=True)
+        return render_template("home.html", error=True)
 
     steam_tags = steam_tags_cache[language]
 
