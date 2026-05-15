@@ -1,0 +1,20 @@
+{% extends 'base.html' %}
+{% block content %}
+
+        <section class="games_container">
+
+            {% for id, data in games_datas.items() %}
+
+            <a href="/show_game/{{id}}" class="game_card">
+
+                <img src="{{ data['image'] }}" alt="Game Image">
+
+                <h2>{{data['name']}}</h2>
+
+            </a>
+
+            {% endfor %}
+
+        </section>
+
+{% endblock %}

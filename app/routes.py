@@ -105,9 +105,11 @@ def search():
     games_datas = choose_game(game_name)
 
     if not games_datas:
+        print('a')
         return render_template("index.html", error=True)
 
-    return render_template("index.html", games_datas=games_datas)
+    print('b')
+    return render_template("search_results.html", games_datas=games_datas)
 
 
 @main.route("/show_game/<id>")

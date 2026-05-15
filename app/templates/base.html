@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Steam Project API</title>
+
+    <link rel="stylesheet"
+    href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+    <header>
+
+        <a href="/" class="logo">
+            Steam Project
+        </a>
+
+        <div class="languages">
+
+            <a href="/set_language/english">🇺🇸</a>
+            <a href="/set_language/brazilian">🇧🇷</a>
+            <a href="/set_language/spanish">🇪🇸</a>
+
+        </div>
+
+        <form action="/search" method="get" class="search_form">
+
+            <input
+                class="game_search_input"
+                type="text"
+                name="game_name"
+                placeholder="{{translation['search_placeholder']}}"
+            >
+
+            <button type="submit">
+                {{ translation['search_button'] }}
+            </button>
+
+        </form>
+
+    </header>
+
+    <main>
+        {% block content %}
+        {% endblock %}
+    </main>
+
+</body>
+</html>
