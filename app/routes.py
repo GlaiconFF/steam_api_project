@@ -27,7 +27,9 @@ translations = {
         "game_tags": "Tags",
         "search_tag": "Search tag",
         "show_all_tags": "Show all",
-        "hide_all_tags": "Hide all"
+        "hide_all_tags": "Hide all",
+        "my_tags": "My Tags",
+        "tracked_games": "Tracked Games"
     },
     "brazilian": {
         "search_placeholder": "Pesquisar jogo",
@@ -45,7 +47,9 @@ translations = {
         "game_tags": "Marcadores",
         "search_tag": "Pesquisar marcador",
         "show_all_tags": "Mostrar todos",
-        "hide_all_tags": "Esconder todos"
+        "hide_all_tags": "Esconder todos",
+        "my_tags": "Meus Marcadores",
+        "tracked_games": "Jogos Rastreados"
     },
     "spanish": {
         "search_placeholder": "Buscar juego",
@@ -63,7 +67,9 @@ translations = {
         "game_tags": "Etiquetas",
         "search_tag": "Buscar etiqueta",
         "show_all_tags": "Mostrar todas",
-        "hide_all_tags": "Ocultar todas"
+        "hide_all_tags": "Ocultar todas",
+        "my_tags": "Mis Etiquetas",
+        "tracked_games": "Juegos Rastreados"
     }
 }
 
@@ -153,7 +159,7 @@ def user_tags():
 
     return render_template("user_tags.html")
 
-@main.route("/cuser_games")
+@main.route("/user_games")
 def user_games():
 
     return render_template("user_games.html")

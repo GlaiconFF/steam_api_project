@@ -17,20 +17,32 @@
                 {{ translation['game_tags'] }}
             </h3>
 
-            <input type="text" id="tag_search" placeholder="{{ translation['search_tag'] }}" class="tag_search_input">
+            <input
+                type="text"
+                id="tag_search"
+                placeholder="{{ translation['search_tag'] }}"
+                class="tag_search_input"
+            >
 
-            <button id="show_all_tags_button" class="show_all_tags_button" data-show="{{ translation['show_all_tags'] }}" data-hide="{{ translation['hide_all_tags'] }}">
+            <button
+                id="show_all_tags_button"
+                class="show_all_tags_button"
+                data-show="{{ translation['show_all_tags'] }}"
+                data-hide="{{ translation['hide_all_tags'] }}"
+            >
                 {{ translation['show_all_tags'] }}
             </button>
 
         </div>
 
-        <div class="tags_container"> 
+        <div class="tags_container">
 
         {% for tag_id, tag_name in steam_tags.items() %}
 
             <div
-            class="tag {% if tag_id in selected_tags %}active{% endif %}" data-id="{{ tag_id }}">
+                class="tag {% if tag_id in selected_tags %}active{% endif %}"
+                data-id="{{ tag_id }}"
+            >
 
                 {{ tag_name }}
 
@@ -48,7 +60,17 @@
 <script>
 
 const tags = document.querySelectorAll(".tag")
+
 const tagSearch = document.getElementById("tag_search")
+
+tagSearch.value =
+    localStorage.getItem("tagSearchValue") || ""
+
+const showAllTagsButton =
+    document.getElementById("show_all_tags_button")
+
+let showingAllTags =
+    localStorage.getItem("showingAllTags") === "true"
 
 tags.forEach(tag => {
 
@@ -64,40 +86,37 @@ tags.forEach(tag => {
 
 })
 
-tagSearch.addEventListener("input", () => {
-
-    const search = tagSearch.value.toLowerCase()
+if (showingAllTags) {
 
     tags.forEach(tag => {
-
-        const tagName = tag.textContent.toLowerCase()
-
-        if (tagName.includes(search)) {
-            tag.style.display = "inline-block"
-        }
-
-        else {
-            tag.style.display = "none"
-        }
-
+        tag.style.display = "inline-block"
     })
 
-})
+    showAllTagsButton.textContent =
+        showAllTagsButton.dataset.hide
 
-const showAllTagsButton = document.getElementById("show_all_tags_button")
+}
 
-let showingAllTags = false
+else {
 
-tags.forEach(tag => {
-    tag.style.display = "none"
-})
+    tags.forEach(tag => {
+        tag.style.display = "none"
+    })
+
+}
 
 showAllTagsButton.addEventListener("click", () => {
 
     const showText = showAllTagsButton.dataset.show
+
     const hideText = showAllTagsButton.dataset.hide
-    
+
     showingAllTags = !showingAllTags
+
+    localStorage.setItem(
+        "showingAllTags",
+        showingAllTags
+    )
 
     if (showingAllTags) {
 
@@ -123,7 +142,13 @@ showAllTagsButton.addEventListener("click", () => {
 
 tagSearch.addEventListener("input", () => {
 
-    const search = tagSearch.value.toLowerCase()
+    localStorage.setItem(
+        "tagSearchValue",
+        tagSearch.value
+    )
+
+    const search =
+        tagSearch.value.toLowerCase()
 
     if (search === "") {
 
@@ -135,24 +160,64 @@ tagSearch.addEventListener("input", () => {
 
         }
 
+        else {
+
+            tags.forEach(tag => {
+                tag.style.display = "inline-block"
+            })
+
+        }
+
         return
+
     }
 
     tags.forEach(tag => {
 
-        const tagName = tag.textContent.toLowerCase()
+        const tagName =
+            tag.textContent.toLowerCase()
 
         if (tagName.includes(search)) {
+
             tag.style.display = "inline-block"
+
         }
 
         else {
+
             tag.style.display = "none"
+
         }
 
     })
 
 })
+
+if (tagSearch.value !== "") {
+
+    const search =
+        tagSearch.value.toLowerCase()
+
+    tags.forEach(tag => {
+
+        const tagName =
+            tag.textContent.toLowerCase()
+
+        if (tagName.includes(search)) {
+
+            tag.style.display = "inline-block"
+
+        }
+
+        else {
+
+            tag.style.display = "none"
+
+        }
+
+    })
+
+}
 
 </script>
 
