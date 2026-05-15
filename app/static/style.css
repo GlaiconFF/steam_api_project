@@ -333,3 +333,44 @@ a, button, .tag, .show_tags {
     color: white;
 
 }
+
+.header_menu {
+
+    display: flex;
+    gap: 20px;
+
+    align-items: center;
+    justify-content: center;
+
+    flex-wrap: wrap;
+
+}
+
+.menu_item {
+
+    font-size: 18px;
+    font-weight: 600;
+
+    padding: 10px 18px;
+
+    border-radius: 10px;
+
+    background-color: rgba(102, 192, 244, 0.12);
+
+    border: 1px solid rgba(102, 192, 244, 0.25);
+
+    color: #c7d5e0;
+
+    cursor: pointer;
+
+}
+
+.menu_item:hover {
+
+    background-color: rgba(102, 192, 244, 0.25);
+
+    color: white;
+
+    transform: translateY(-2px);
+
+}
