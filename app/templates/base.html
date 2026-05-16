@@ -46,6 +46,40 @@
 
     </form>
 
+    <div class="global_selected_tags">
+
+        <div class="selected_header_title">
+
+            Tags
+            (<span id="selected_count">
+                {{ selected_tags_count }}
+            </span>/5)
+
+        </div>
+
+    <div id="selected_tags_container">
+
+        {% for tag_id in selected_tags %}
+
+            <div
+                class="selected_tag"
+                data-id="{{ tag_id }}"
+            >
+
+                {{ steam_tags[tag_id] }}
+
+                <span class="remove_tag">
+                    ✕
+                </span>
+
+            </div>
+
+        {% endfor %}
+
+    </div>
+
+    </div>
+
     </header>
 
     <main>
@@ -53,8 +87,8 @@
         {% endblock %}
     </main>
 
-<script>
-
+<script
+    src="{{ url_for('static', filename='tags.js') }}">
 </script>
 
 {% block scripts %}

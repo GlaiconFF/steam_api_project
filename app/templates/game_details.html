@@ -82,19 +82,6 @@
 
         </div>
 
-        <div class="selected_tags_section">
-
-            <h3>
-                Selected Tags
-                (<span id="selected_count">
-                    {{ selected_tags_count }}
-                </span>/5)
-            </h3>
-
-            <div id="selected_tags_container"></div>
-
-        </div>
-
         <div class="tags_section">
 
             <h3>
@@ -127,52 +114,7 @@
 
 {% block scripts %}
 
-<script
-src="{{ url_for('static', filename='tags.js') }}">
-</script>
-
 <script>
-
-const selectedTagsContainer =
-    document.getElementById(
-        "selected_tags_container"
-    )
-
-const selectedCount =
-    document.getElementById(
-        "selected_count"
-    )
-
-function updateSelectedTagsUI() {
-
-    selectedTagsContainer.innerHTML = ""
-
-    const activeTags =
-        document.querySelectorAll(
-            ".tag.active"
-        )
-
-    activeTags.forEach(tag => {
-
-        const selectedTag =
-            document.createElement("div")
-
-        selectedTag.classList.add(
-            "selected_tag"
-        )
-
-        selectedTag.textContent =
-            tag.textContent.trim()
-
-        selectedTagsContainer.appendChild(
-            selectedTag
-        )
-
-    })
-
-}
-
-updateSelectedTagsUI()
 
 setupTags()
 

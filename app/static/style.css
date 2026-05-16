@@ -399,3 +399,77 @@ a, button, .tag, .show_tags, .select_all_tags_button  {
     color: white;
 
 }
+
+.global_selected_tags {
+
+    display: flex;
+    align-items: center;
+    gap: 15px;
+
+    padding: 12px 20px;
+
+    background-color: #171d25;
+
+    border-bottom: 1px solid #2a475e;
+
+    flex-wrap: wrap;
+
+}
+
+.selected_header_title {
+
+    color: #c7d5e0;
+
+    font-size: 14px;
+
+    font-weight: bold;
+
+    white-space: nowrap;
+
+}
+
+#selected_tags_container {
+
+    display: flex;
+
+    gap: 8px;
+
+    flex-wrap: wrap;
+
+}
+
+.selected_tag {
+
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    background-color: #2a475e;
+
+    color: #66c0f4;
+
+    padding: 6px 12px;
+
+    border-radius: 4px;
+
+    font-size: 13px;
+
+}
+
+.remove_tag {
+
+    cursor: pointer;
+
+    color: #c7d5e0;
+
+    font-size: 12px;
+
+    transition: 0.2s;
+
+}
+
+.remove_tag:hover {
+
+    color: white;
+
+}

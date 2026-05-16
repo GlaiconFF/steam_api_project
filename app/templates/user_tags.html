@@ -25,29 +25,6 @@
 
 </div>
 
-<div class="selected_tags_section">
-
-    <h3>
-        Selected Tags
-        (<span id="selected_count">
-            {{ selected_tags_count }}
-        </span>/5)
-    </h3>
-
-    <div id="selected_tags_container">
-
-        {% for tag_name in selected_tags_names %}
-
-            <div class="selected_tag">
-                {{ tag_name }}
-            </div>
-
-        {% endfor %}
-
-    </div>
-
-</div>
-
 <div class="tags_container">
 
 {% for tag_id, tag_name in steam_tags.items() %}
@@ -68,10 +45,6 @@
 {% endblock %}
 
 {% block scripts %}
-
-<script
-src="{{ url_for('static', filename='tags.js') }}">
-</script>
 
 <script>
 

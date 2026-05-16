@@ -145,7 +145,7 @@ def toggle_tag(tag_id):
         "english"
     )
 
-    selected_tags_names = []
+    selected_tags_data = []
 
     for selected_tag_id in selected:
 
@@ -155,13 +155,14 @@ def toggle_tag(tag_id):
 
         if tag_name:
 
-            selected_tags_names.append(
-                tag_name
-            )
+            selected_tags_data.append({
+                "id": selected_tag_id,
+                "name": tag_name
+            })
 
     return {
         "count": len(selected),
-        "tags": selected_tags_names
+        "tags": selected_tags_data
     }
 
 
