@@ -138,5 +138,3 @@ def search_game_with_tags(tag_id):
     games_found = soup_search_game_with_tags(search_game_with_tags_html)
 
     return games_found
-
-print(search_game_with_tags("3871"))

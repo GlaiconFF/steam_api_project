@@ -3,81 +3,150 @@
 
 <div>
 
-            <h3 class="show_tags">
-                {{ translation['game_tags'] }}
-            </h3>
+    <h3 class="show_tags">
+        {{ translation['game_tags'] }}
+    </h3>
 
-            <input
-                type="text"
-                id="tag_search"
-                placeholder="{{ translation['search_tag'] }}"
-                class="tag_search_input"
-            >
+    <input
+        type="text"
+        id="tag_search"
+        placeholder="{{ translation['search_tag'] }}"
+        class="tag_search_input"
+    >
 
-            <button
-                id="show_all_tags_button"
-                class="show_all_tags_button"
-                data-show="{{ translation['show_all_tags'] }}"
-                data-hide="{{ translation['hide_all_tags'] }}"
-            >
-                {{ translation['show_all_tags'] }}
-            </button>
+    <button
+        id="show_all_tags_button"
+        class="show_all_tags_button"
+        data-show="{{ translation['show_all_tags'] }}"
+        data-hide="{{ translation['hide_all_tags'] }}"
+    >
+        {{ translation['show_all_tags'] }}
+    </button>
 
-            <button
-                id="select_all_tags_button"
-                class="select_all_tags_button"
-                data-show="{{ translation['select_all_tags'] }}"
-                data-hide="{{ translation['remove_all_tags'] }}"
-            >
-                {{ translation['select_all_tags'] }}
-            </button>
+    <button
+        id="select_all_tags_button"
+        class="select_all_tags_button"
+        data-show="{{ translation['select_all_tags'] }}"
+        data-hide="{{ translation['remove_all_tags'] }}"
+    >
+        {{ translation['select_all_tags'] }}
+    >
+        {{ translation['select_all_tags'] }}
+    </button>
 
-        </div>
+</div>
 
-        <div class="tags_container">
+<div class="selected_tags_section">
 
-        {% for tag_id, tag_name in steam_tags.items() %}
+    <h3>
+        Selected Tags
+        (<span id="selected_count">0</span>/5)
+    </h3>
 
-            <div
-                class="tag {% if tag_id in selected_tags %}active{% endif %}"
-                data-id="{{ tag_id }}"
-            >
+    <div id="selected_tags_container"></div>
 
-                {{ tag_name }}
+</div>
 
-            </div>
+<div class="tags_container">
 
-        {% endfor %}
+{% for tag_id, tag_name in steam_tags.items() %}
 
-        </div>
+    <div
+        class="tag {% if tag_id in selected_tags %}active{% endif %}"
+        data-id="{{ tag_id }}"
+    >
 
-    </main>
+        {{ tag_name }}
+
+    </div>
+
+{% endfor %}
+
+</div>
 
 {% endblock %}
 
 {% block scripts %}
+
+<script
+src="{{ url_for('static', filename='tags.js') }}">
+</script>
+
 <script>
 
 const tags = document.querySelectorAll(".tag")
 
-const tagSearch = document.getElementById("tag_search")
+const tagSearch =
+    document.getElementById("tag_search")
+
+const selectedTagsContainer =
+    document.getElementById(
+        "selected_tags_container"
+    )
+
+const selectedCount =
+    document.getElementById(
+        "selected_count"
+    )
 
 tagSearch.value =
-    localStorage.getItem("tagSearchValue") || ""
+    localStorage.getItem(
+        "tagSearchValue"
+    ) || ""
 
 const showAllTagsButton =
-    document.getElementById("show_all_tags_button")
+    document.getElementById(
+        "show_all_tags_button"
+    )
 
 const selectAllTagsButton =
-    document.getElementById("select_all_tags_button")
+    document.getElementById(
+        "select_all_tags_button"
+    )
 
 let showingAllTags =
-    localStorage.getItem("showingAllTags") === "true"
+    localStorage.getItem(
+        "showingAllTags"
+    ) === "true"
+
+function updateSelectedTagsUI() {
+
+    selectedTagsContainer.innerHTML = ""
+
+    const activeTags =
+        document.querySelectorAll(
+            ".tag.active"
+        )
+
+    selectedCount.textContent =
+        activeTags.length
+
+    activeTags.forEach(tag => {
+
+        const selectedTag =
+            document.createElement("div")
+
+        selectedTag.classList.add(
+            "selected_tag"
+        )
+
+        selectedTag.textContent =
+            tag.textContent.trim()
+
+        selectedTagsContainer.appendChild(
+            selectedTag
+        )
+
+    })
+
+}
 
 function updateSelectAllButton() {
 
     const activeTags =
-        document.querySelectorAll(".tag.active")
+        document.querySelectorAll(
+            ".tag.active"
+        )
 
     if (activeTags.length > 0) {
 
@@ -95,26 +164,15 @@ function updateSelectAllButton() {
 
 }
 
-tags.forEach(tag => {
-
-    tag.addEventListener("click", async () => {
-
-        tag.classList.toggle("active")
-
-        const tagId = tag.dataset.id
-
-        await fetch(`/toggle_tag/${tagId}`)
-
-        updateSelectAllButton()
-
-    })
-
-})
+setupTags()
 
 if (showingAllTags) {
 
     tags.forEach(tag => {
-        tag.style.display = "inline-block"
+
+        tag.style.display =
+            "inline-block"
+
     })
 
     showAllTagsButton.textContent =
@@ -125,98 +183,127 @@ if (showingAllTags) {
 else {
 
     tags.forEach(tag => {
+
         tag.style.display = "none"
+
     })
 
 }
 
-showAllTagsButton.addEventListener("click", () => {
+showAllTagsButton.addEventListener(
+    "click",
+    () => {
 
-    const showText = showAllTagsButton.dataset.show
+        const showText =
+            showAllTagsButton.dataset.show
 
-    const hideText = showAllTagsButton.dataset.hide
+        const hideText =
+            showAllTagsButton.dataset.hide
 
-    showingAllTags = !showingAllTags
+        showingAllTags =
+            !showingAllTags
 
-    localStorage.setItem(
-        "showingAllTags",
-        showingAllTags
-    )
+        localStorage.setItem(
+            "showingAllTags",
+            showingAllTags
+        )
 
-    if (showingAllTags) {
-
-        tags.forEach(tag => {
-            tag.style.display = "inline-block"
-        })
-
-        showAllTagsButton.textContent = hideText
-
-    }
-
-    else {
-
-        tags.forEach(tag => {
-            tag.style.display = "none"
-        })
-
-        showAllTagsButton.textContent = showText
-
-    }
-
-})
-
-tagSearch.addEventListener("input", () => {
-
-    localStorage.setItem(
-        "tagSearchValue",
-        tagSearch.value
-    )
-
-    const search =
-        tagSearch.value.toLowerCase()
-
-    if (search === "") {
-
-        if (!showingAllTags) {
+        if (showingAllTags) {
 
             tags.forEach(tag => {
-                tag.style.display = "none"
+
+                tag.style.display =
+                    "inline-block"
+
             })
+
+            showAllTagsButton.textContent =
+                hideText
 
         }
 
         else {
 
             tags.forEach(tag => {
-                tag.style.display = "inline-block"
+
+                tag.style.display =
+                    "none"
+
             })
 
-        }
+            showAllTagsButton.textContent =
+                showText
 
-        return
+        }
 
     }
+)
 
-    tags.forEach(tag => {
+tagSearch.addEventListener(
+    "input",
+    () => {
 
-        const tagName =
-            tag.textContent.toLowerCase()
+        localStorage.setItem(
+            "tagSearchValue",
+            tagSearch.value
+        )
 
-        if (tagName.includes(search)) {
+        const search =
+            tagSearch.value.toLowerCase()
 
-            tag.style.display = "inline-block"
+        if (search === "") {
+
+            if (!showingAllTags) {
+
+                tags.forEach(tag => {
+
+                    tag.style.display =
+                        "none"
+
+                })
+
+            }
+
+            else {
+
+                tags.forEach(tag => {
+
+                    tag.style.display =
+                        "inline-block"
+
+                })
+
+            }
+
+            return
 
         }
 
-        else {
+        tags.forEach(tag => {
 
-            tag.style.display = "none"
+            const tagName =
+                tag.textContent.toLowerCase()
 
-        }
+            if (
+                tagName.includes(search)
+            ) {
 
-    })
+                tag.style.display =
+                    "inline-block"
 
-})
+            }
+
+            else {
+
+                tag.style.display =
+                    "none"
+
+            }
+
+        })
+
+    }
+)
 
 if (tagSearch.value !== "") {
 
@@ -230,13 +317,15 @@ if (tagSearch.value !== "") {
 
         if (tagName.includes(search)) {
 
-            tag.style.display = "inline-block"
+            tag.style.display =
+                "inline-block"
 
         }
 
         else {
 
-            tag.style.display = "none"
+            tag.style.display =
+                "none"
 
         }
 
@@ -246,35 +335,43 @@ if (tagSearch.value !== "") {
 
 updateSelectAllButton()
 
-selectAllTagsButton.addEventListener("click", async () => {
+updateSelectedTagsUI()
 
-    const activeTags =
-        document.querySelectorAll(".tag.active")
+selectAllTagsButton.addEventListener(
+    "click",
+    async () => {
 
-    const shouldRemove =
-        activeTags.length > 0
+        const activeTags =
+            document.querySelectorAll(
+                ".tag.active"
+            )
 
-    await fetch(`/set_all_tags/${shouldRemove}`)
+        const shouldRemove =
+            activeTags.length > 0
 
-    tags.forEach(tag => {
+        await fetch(
+            `/set_all_tags/${shouldRemove}`
+        )
 
-        if (shouldRemove) {
+        tags.forEach(tag => {
 
-            tag.classList.remove("active")
+            if (shouldRemove) {
 
-        }
+                tag.classList.remove(
+                    "active"
+                )
 
-        else {
+            }
 
-            tag.classList.add("active")
+        })
 
-        }
+        updateSelectAllButton()
 
-    })
+        updateSelectedTagsUI()
 
-    updateSelectAllButton()
-
-})
+    }
+)
 
 </script>
+
 {% endblock %}
