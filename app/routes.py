@@ -84,11 +84,31 @@ translations = {
 def inject_translation():
 
     language = session.get("language", "english")
+    selected_tags = session.get(
+        "selected_tags",
+        []
+    )
+
+    selected_tags_names = []
+
+    for tag_id in selected_tags:
+
+        tag_name = steam_tags_cache[
+            language
+        ].get(tag_id)
+
+        if tag_name:
+
+            selected_tags_names.append(
+                tag_name
+            )
 
     return {
         "translation": translations[language],
         "steam_tags": steam_tags_cache[language],
-        "selected_tags": session.get("selected_tags", [])
+        "selected_tags": selected_tags,
+        "selected_tags_count": len(selected_tags),
+        "selected_tags_names": selected_tags_names
     }
 
 
@@ -99,16 +119,50 @@ def home():
 @main.route("/toggle_tag/<int:tag_id>")
 def toggle_tag(tag_id):
 
-    selected = session.get("selected_tags", [])
+    selected = session.get(
+        "selected_tags",
+        []
+    )
 
     if tag_id in selected:
+
         selected.remove(tag_id)
+
     else:
+
+        if len(selected) >= 5:
+
+            return {
+                "error": "limit"
+            }
+
         selected.append(tag_id)
 
     session["selected_tags"] = selected
 
-    return ""
+    language = session.get(
+        "language",
+        "english"
+    )
+
+    selected_tags_names = []
+
+    for selected_tag_id in selected:
+
+        tag_name = steam_tags_cache[
+            language
+        ].get(selected_tag_id)
+
+        if tag_name:
+
+            selected_tags_names.append(
+                tag_name
+            )
+
+    return {
+        "count": len(selected),
+        "tags": selected_tags_names
+    }
 
 
 @main.route("/search")

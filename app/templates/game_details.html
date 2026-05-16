@@ -86,7 +86,9 @@
 
             <h3>
                 Selected Tags
-                (<span id="selected_count">0</span>/5)
+                (<span id="selected_count">
+                    {{ selected_tags_count }}
+                </span>/5)
             </h3>
 
             <div id="selected_tags_container"></div>
@@ -149,9 +151,6 @@ function updateSelectedTagsUI() {
         document.querySelectorAll(
             ".tag.active"
         )
-
-    selectedCount.textContent =
-        activeTags.length
 
     activeTags.forEach(tag => {
 

@@ -7,68 +7,100 @@ function setupTags() {
 
     tags.forEach(tag => {
 
-        tag.addEventListener(
-            "click",
-            async () => {
+        tag.onclick = async () => {
 
-                const activeTags =
-                    document.querySelectorAll(
-                        ".tag.active"
-                    )
-
-                const alreadyActive =
-                    tag.classList.contains(
-                        "active"
-                    )
-
-                if (
-                    !alreadyActive &&
-                    activeTags.length >= MAX_TAGS
-                ) {
-
-                    alert(
-                        `You can only select ${MAX_TAGS} tags`
-                    )
-
-                    return
-
-                }
-
-                tag.classList.toggle(
+            const alreadyActive =
+                tag.classList.contains(
                     "active"
                 )
 
-                const tagId =
-                    tag.dataset.id
+            if (alreadyActive) {
 
+                tag.classList.remove(
+                    "active"
+                )
+
+            }
+
+            else {
+
+                tag.classList.add(
+                    "active"
+                )
+
+            }
+
+            const tagId =
+                tag.dataset.id
+
+            const response =
                 await fetch(
                     `/toggle_tag/${tagId}`
                 )
 
-                if (
-                    document.getElementById(
-                        "selected_tags_container"
-                    ) &&
-                    document.getElementById(
-                        "selected_count"
-                    )
-                ) {
+            const data =
+                await response.json()
 
-                    updateSelectedTagsUI()
+            if (data.error === "limit") {
 
-                }
+                tag.classList.remove(
+                    "active"
+                )
 
-                if (
-                    typeof updateSelectAllButton
-                    === "function"
-                ) {
+                alert(
+                    `You can only select ${MAX_TAGS} tags`
+                )
 
-                    updateSelectAllButton()
-
-                }
+                return
 
             }
-        )
+
+            const selectedCount =
+                document.getElementById(
+                    "selected_count"
+                )
+
+            if (selectedCount) {
+
+                selectedCount.textContent =
+                    data.count
+
+            }
+
+            const container =
+                document.getElementById(
+                    "selected_tags_container"
+                )
+
+            if (container) {
+
+                container.innerHTML = ""
+
+                data.tags.forEach(
+                    tagName => {
+
+                        const div =
+                            document.createElement(
+                                "div"
+                            )
+
+                        div.classList.add(
+                            "selected_tag"
+                        )
+
+                        div.textContent =
+                            tagName
+
+                        container.appendChild(
+                            div
+                        )
+
+                    }
+                )
+
+            }
+
+        }
 
     })
 
