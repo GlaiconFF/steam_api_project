@@ -253,7 +253,7 @@ header {
     box-shadow: 0 0 10px rgba(102, 192, 244, 0.25);
 }
 
-a, button, .tag, .show_tags {
+a, button, .tag, .show_tags, .select_all_tags_button  {
     -webkit-tap-highlight-color: transparent;
 }
 
@@ -372,5 +372,30 @@ a, button, .tag, .show_tags {
     color: white;
 
     transform: translateY(-2px);
+
+}
+
+.select_all_tags_button {
+
+    background-color: #66c0f4;
+    color: #171a21;
+
+    border: none;
+    border-radius: 10px;
+
+    padding: 12px 18px;
+
+    font-weight: bold;
+    cursor: pointer;
+
+    margin-bottom: 15px;
+    margin-left: 10px;
+
+}
+
+.select_all_tags_button:hover {
+
+    background-color: #4da6d9;
+    color: white;
 
 }

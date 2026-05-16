@@ -33,6 +33,15 @@
                 {{ translation['show_all_tags'] }}
             </button>
 
+            <button
+                id="select_all_tags_button"
+                class="select_all_tags_button"
+                data-show="{{ translation['select_all_tags'] }}"
+                data-hide="{{ translation['remove_all_tags'] }}"
+            >
+                {{ translation['select_all_tags'] }}
+            </button>
+
         </div>
 
         <div class="tags_container">
@@ -69,8 +78,32 @@ tagSearch.value =
 const showAllTagsButton =
     document.getElementById("show_all_tags_button")
 
+const selectAllTagsButton =
+    document.getElementById("select_all_tags_button")
+
 let showingAllTags =
     localStorage.getItem("showingAllTags") === "true"
+
+function updateSelectAllButton() {
+
+    const activeTags =
+        document.querySelectorAll(".tag.active")
+
+    if (activeTags.length > 0) {
+
+        selectAllTagsButton.textContent =
+            selectAllTagsButton.dataset.hide
+
+    }
+
+    else {
+
+        selectAllTagsButton.textContent =
+            selectAllTagsButton.dataset.show
+
+    }
+
+}
 
 tags.forEach(tag => {
 
@@ -81,6 +114,8 @@ tags.forEach(tag => {
         const tagId = tag.dataset.id
 
         await fetch(`/toggle_tag/${tagId}`)
+
+        updateSelectAllButton()
 
     })
 
@@ -218,6 +253,38 @@ if (tagSearch.value !== "") {
     })
 
 }
+
+updateSelectAllButton()
+
+selectAllTagsButton.addEventListener("click", async () => {
+
+    const activeTags =
+        document.querySelectorAll(".tag.active")
+
+    const shouldRemove =
+        activeTags.length > 0
+
+    await fetch(`/set_all_tags/${shouldRemove}`)
+
+    tags.forEach(tag => {
+
+        if (shouldRemove) {
+
+            tag.classList.remove("active")
+
+        }
+
+        else {
+
+            tag.classList.add("active")
+
+        }
+
+    })
+
+    updateSelectAllButton()
+
+})
 
 </script>
 

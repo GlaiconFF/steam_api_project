@@ -29,7 +29,9 @@ translations = {
         "show_all_tags": "Show all",
         "hide_all_tags": "Hide all",
         "my_tags": "My Tags",
-        "tracked_games": "Tracked Games"
+        "tracked_games": "Tracked Games",
+        "select_all_tags": "Select All",
+        "remove_all_tags": "Remove All"
     },
     "brazilian": {
         "search_placeholder": "Pesquisar jogo",
@@ -49,7 +51,9 @@ translations = {
         "show_all_tags": "Mostrar todos",
         "hide_all_tags": "Esconder todos",
         "my_tags": "Meus Marcadores",
-        "tracked_games": "Jogos Rastreados"
+        "tracked_games": "Jogos Rastreados",
+        "select_all_tags": "Selecionar Todos",
+        "remove_all_tags": "Remover Todos"
     },
     "spanish": {
         "search_placeholder": "Buscar juego",
@@ -69,7 +73,9 @@ translations = {
         "show_all_tags": "Mostrar todas",
         "hide_all_tags": "Ocultar todas",
         "my_tags": "Mis Etiquetas",
-        "tracked_games": "Juegos Rastreados"
+        "tracked_games": "Juegos Rastreados",
+        "select_all_tags": "Seleccionar Todas",
+        "remove_all_tags": "Eliminar Todas"
     }
 }
 
@@ -163,3 +169,22 @@ def user_tags():
 def user_games():
 
     return render_template("user_games.html")
+
+@main.route("/set_all_tags/<action>")
+def set_all_tags(action):
+
+    language = session.get("language", "english")
+
+    steam_tags = steam_tags_cache[language]
+
+    if action == "True":
+
+        session["selected_tags"] = []
+
+    else:
+
+        session["selected_tags"] = list(steam_tags.keys())
+
+    session.modified = True
+
+    return "", 204
