@@ -177,7 +177,7 @@ def set_all_tags(action):
 
     steam_tags = steam_tags_cache[language]
 
-    if action == "True":
+    if action == "true":
 
         session["selected_tags"] = []
 

@@ -6,6 +6,7 @@ search_id = "https://store.steampowered.com/api/storesearch/"
 item_details = "https://store.steampowered.com/api/appdetails/"
 id_reviews = "https://store.steampowered.com/appreviews/"
 public_tags = "https://store.steampowered.com/apphoverpublic/"
+search_game_tags = "https://store.steampowered.com/search/results/?json=0&tags="
 
 session = requests.Session()
 
@@ -39,6 +40,19 @@ def soup_public_tags(public_tags_html):
     ]
 
     return game_public_tags_list
+
+def soup_search_game_with_tags(search_game_with_tags_html):
+
+    soup = BeautifulSoup(search_game_with_tags_html, 'html.parser')
+
+    games_with_tags = soup.find_all('a', class_='search_result_row')
+
+    games_and_images = {
+        game.find('span', class_='title').text: game.find('img')['src']
+        for game in games_with_tags
+        }
+
+    return games_and_images
 
 def choose_game(name):
     games_datas = {}
@@ -116,3 +130,13 @@ def search_game(game_id, language, currency):
         }
     
     return game_dict
+
+def search_game_with_tags(tag_id):
+
+    search_game_with_tags_html = safe_request_html(search_game_tags+tag_id)
+
+    games_found = soup_search_game_with_tags(search_game_with_tags_html)
+
+    return games_found
+
+print(search_game_with_tags("3871"))
