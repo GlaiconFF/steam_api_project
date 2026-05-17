@@ -224,7 +224,7 @@ header {
     color: white;
 }
 
-.show_tags {
+.show_tags, .recommended_title {
     font-size: 20px;
     font-weight: 600;
 

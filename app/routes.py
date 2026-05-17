@@ -31,7 +31,8 @@ translations = {
         "my_tags": "My Tags",
         "tracked_games": "Tracked Games",
         "select_all_tags": "Select All",
-        "remove_all_tags": "Remove All"
+        "remove_all_tags": "Remove All",
+        "recommended_games": "Recommended Games"
     },
     "brazilian": {
         "search_placeholder": "Pesquisar jogo",
@@ -53,7 +54,8 @@ translations = {
         "my_tags": "Meus Marcadores",
         "tracked_games": "Jogos Rastreados",
         "select_all_tags": "Selecionar Todos",
-        "remove_all_tags": "Remover Todos"
+        "remove_all_tags": "Remover Todos",
+        "recommended_games": "Jogos Recomendados"
     },
     "spanish": {
         "search_placeholder": "Buscar juego",
@@ -75,7 +77,8 @@ translations = {
         "my_tags": "Mis Etiquetas",
         "tracked_games": "Juegos Rastreados",
         "select_all_tags": "Seleccionar Todas",
-        "remove_all_tags": "Eliminar Todas"
+        "remove_all_tags": "Eliminar Todas",
+        "recommended_games": "Juegos Recomendados"
     }
 }
 

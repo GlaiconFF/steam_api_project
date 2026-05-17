@@ -11,6 +11,10 @@
 
     {% if recommended_games %}
 
+        <h3 class="recommended_title">
+            {{ translation['recommended_games'] }}
+        </h3>
+
         <div class="recommended_games">
 
         {% for game_id, game_data in recommended_games.items() %}
