@@ -8,6 +8,17 @@
             </p>
 
         {% endif %}
+
+        {% if recommended_games %}
+
+            {% for game, image in recommended_games.items() %}
+
+            <img src="{{ image }}" >
+            <span>{{ game }}</span>
+
+            {% endfor %}
+
+        {% endif %}
         
 {% endblock %}
 

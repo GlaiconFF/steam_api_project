@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template, request, session, redirect
-from .services.steam_api import choose_game, search_game
+from .services.steam_api import choose_game, search_game, search_game_with_tags
 from . import steam_tags_cache
 
 main = Blueprint("main", __name__)
@@ -114,7 +114,19 @@ def inject_translation():
 
 @main.route("/")
 def home():
-    return render_template("home.html")
+
+    selected_tags = session.get(
+        "selected_tags",
+        []
+    )
+
+    tags_to_search = ",".join(
+        map(str, selected_tags)
+    )
+
+    recommended_games = search_game_with_tags(tags_to_search)
+
+    return render_template("home.html", recommended_games=recommended_games)
 
 @main.route("/toggle_tag/<int:tag_id>")
 def toggle_tag(tag_id):
