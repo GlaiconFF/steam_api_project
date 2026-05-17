@@ -41,18 +41,50 @@ def soup_public_tags(public_tags_html):
 
     return game_public_tags_list
 
-def soup_search_game_with_tags(search_game_with_tags_html):
+def soup_search_game_with_tags(
+    search_game_with_tags_html
+):
 
-    soup = BeautifulSoup(search_game_with_tags_html, 'html.parser')
+    soup = BeautifulSoup(
+        search_game_with_tags_html,
+        'html.parser'
+    )
 
-    games_with_tags = soup.find_all('a', class_='search_result_row')
+    games_with_tags = soup.find_all(
+        'a',
+        class_='search_result_row'
+    )
 
-    games_and_images = {
-        game.find('span', class_='title').text: game.find('img')['src']
-        for game in games_with_tags
+    games_tags_data = {}
+
+    for game in games_with_tags:
+
+        game_name = game.find(
+            'span',
+            class_='title'
+        ).text
+
+        game_image = game.find(
+            'img'
+        )['src']
+
+        game_link = game['href']
+
+        game_id = (
+            game_link
+            .split('/app/')[1]
+            .split('/')[0]
+        )
+
+        games_tags_data[game_id] = {
+
+            "name": game_name,
+            "image": game_image
+
         }
 
-    return games_and_images
+    return games_tags_data
+
 
 def choose_game(name):
     games_datas = {}

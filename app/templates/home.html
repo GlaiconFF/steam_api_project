@@ -1,25 +1,42 @@
 {% extends 'base.html' %}
 {% block content %}
 
-        {% if error %}
+    {% if error %}
 
-            <p class="error">
-                {{ translation['steam_api_error'] }}
-            </p>
+        <p class="error">
+            {{ translation['steam_api_error'] }}
+        </p>
 
-        {% endif %}
+    {% endif %}
 
-        {% if recommended_games %}
+    {% if recommended_games %}
 
-            {% for game, image in recommended_games.items() %}
+        <div class="recommended_games">
 
-            <img src="{{ image }}" >
-            <span>{{ game }}</span>
+        {% for game_id, game_data in recommended_games.items() %}
 
-            {% endfor %}
+            <a
+                href="/show_game/{{ game_id }}"
+                class="recommended_game_card"
+            >
 
-        {% endif %}
-        
+                <img
+                    src="{{ game_data.image }}"
+                    alt="{{ game_data.name }}"
+                >
+
+                <span>
+                    {{ game_data.name }}
+                </span>
+
+            </a>
+
+        {% endfor %}
+
+        </div>
+
+    {% endif %}
+
 {% endblock %}
 
 {% block scripts %}

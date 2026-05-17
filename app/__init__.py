@@ -16,7 +16,6 @@ def load_tags_cache():
 
     global steam_tags_cache
 
-
     with psycopg2.connect(
         host=os.getenv("DB_HOST"),
         database=os.getenv("DB_NAME"),
@@ -41,9 +40,9 @@ def load_tags_cache():
 
                 tag_id = row[0]
 
-                steam_tags_cache["english"][tag_id] = row[1]
-                steam_tags_cache["brazilian"][tag_id] = row[2]
-                steam_tags_cache["spanish"][tag_id] = row[3]
+                steam_tags_cache["english"][tag_id] = row[1].strip()
+                steam_tags_cache["brazilian"][tag_id] = row[2].strip()
+                steam_tags_cache["spanish"][tag_id] = row[3].strip()
 
 def create_app():
 

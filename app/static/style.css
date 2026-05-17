@@ -473,3 +473,63 @@ a, button, .tag, .show_tags, .select_all_tags_button  {
     color: white;
 
 }
+
+.recommended_games {
+
+    display: flex;
+
+    flex-wrap: wrap;
+
+    justify-content: center;
+
+    gap: 20px;
+
+    padding: 20px;
+
+}
+
+.recommended_game_card {
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 10px;
+
+    width: 300px;
+
+    background-color: #1b2838;
+
+    border-radius: 8px;
+
+    overflow: hidden;
+
+    transition: 0.2s;
+
+}
+
+.recommended_game_card:hover {
+
+    transform: scale(1.03);
+
+}
+
+.recommended_game_card img {
+
+    width: 100%;
+
+    height: auto;
+
+}
+
+.recommended_game_card span {
+
+    color: white;
+
+    padding: 10px;
+
+    font-size: 15px;
+
+    font-weight: bold;
+
+}
