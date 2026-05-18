@@ -206,12 +206,6 @@ def show_game(id):
 
     steam_tags = steam_tags_cache[language]
 
-    for tag_id, tag_name in steam_tags.items():
-
-        if "sobre" in tag_name.lower():
-
-            print(tag_id, tag_name)
-
     tag_name_to_id = {
         tag_name: tag_id
         for tag_id, tag_name in steam_tags.items()
@@ -222,10 +216,6 @@ def show_game(id):
     for game_tag in game_data["tags_list"]:
 
         tag_id = tag_name_to_id.get(game_tag)
-
-        if tag_id is None:
-
-            print(game_tag)
 
         game_data["tags_with_id"].append({
             "id": tag_id,
