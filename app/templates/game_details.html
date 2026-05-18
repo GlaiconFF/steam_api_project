@@ -56,7 +56,11 @@
                     {{ translation['game_positive_reviews'] }}
                 </strong>:
 
-                {{ game_data.positive_reviews }}
+                {% if language == 'english' %} {{ "{:,}".format(game_data.positive_reviews) }}
+
+                {% else %} {{ "{:,}".format(game_data.positive_reviews).replace(",", ".") }}
+
+                {% endif %}
 
             </p>
 
@@ -66,7 +70,11 @@
                     {{ translation['game_negative_reviews'] }}
                 </strong>:
 
-                {{ game_data.negative_reviews }}
+                {% if language == 'english' %} {{ "{:,}".format(game_data.negative_reviews) }}
+
+                {% else %} {{ "{:,}".format(game_data.negative_reviews).replace(",", ".") }}
+
+                {% endif %}
 
             </p>
 
@@ -76,7 +84,11 @@
                     {{ translation['game_total_reviews'] }}
                 </strong>:
 
-                {{ game_data.total_reviews }}
+                {% if language == 'english' %} {{ "{:,}".format(game_data.total_reviews) }}
+
+                {% else %} {{ "{:,}".format(game_data.total_reviews).replace(",", ".") }}
+
+                {% endif %}
 
             </p>
 

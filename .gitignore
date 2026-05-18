@@ -6,3 +6,4 @@ venv/
 .env
 .idea/
 .vscode/
+steam_api_tests.py

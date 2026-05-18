@@ -110,6 +110,7 @@ def inject_translation():
             )
 
     return {
+        "language": language,
         "translation": translations[language],
         "steam_tags": steam_tags_cache[language],
         "selected_tags": selected_tags,
