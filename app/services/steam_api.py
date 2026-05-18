@@ -103,25 +103,25 @@ def choose_game(name):
 
     return games_datas
 
-def search_game_review(game_id, language):
+def search_game_review(game_id, language='english'):
 
     game_reviews_data = safe_request_json(id_reviews+f"{game_id}?json=1&filter=all&language=all&l={language}")
 
     return game_reviews_data
 
-def search_game_details(game_id, language, currency):
+def search_game_details(game_id, language='englush', currency='en'):
 
     game_details_data = safe_request_json(item_details+f"?appids={game_id}&cc={currency}&l={language}")
 
     return game_details_data
 
-def search_public_tags(game_id, language):
+def search_public_tags(game_id, language='english'):
     
     public_tags_data = safe_request_html(public_tags+f"{game_id}?l={language}")
     
     return public_tags_data
 
-def search_game(game_id, language, currency):
+def search_game(game_id, language="english", currency="en"):
     game_reviews_data = search_game_review(game_id, language)
     game_details_data = search_game_details(game_id, language, currency)
     game_public_tags_html = search_public_tags(game_id, language)
@@ -135,7 +135,9 @@ def search_game(game_id, language, currency):
     game_name = game_details_data[game_id]['data'].get('name')
     game_description = game_details_data[game_id]['data'].get('short_description')
     game_is_free = game_details_data[game_id]['data'].get('is_free')
-    game_price = game_details_data[game_id]['data'].get('price_overview', {}).get('final_formatted', {})
+    game_initial_price = game_details_data[game_id]['data'].get('price_overview', {}).get('initial_formatted', {})
+    game_final_price = game_details_data[game_id]['data'].get('price_overview', {}).get('final_formatted', {})
+    game_discount_percent = f"{game_details_data[game_id]['data'].get('price_overview', {}).get('discount_percent', {})}%"
     game_not_launched = game_details_data[game_id]['data']['release_date'].get('coming_soon')
     game_release_date = game_details_data[game_id]['data']['release_date'].get('date', 0)
     game_supported_languages = game_details_data[game_id]['data'].get('supported_languages', '')
@@ -151,7 +153,9 @@ def search_game(game_id, language, currency):
         "name": game_name,
         "description": game_description,
         "is_free": game_is_free,
-        "price": game_price,
+        "initial_price": game_initial_price,
+        "final_price": game_final_price,
+        "discount_percent": game_discount_percent,
         "not_launched": game_not_launched,
         "release_date": game_release_date,
         "supported_languages": game_supported_languages,

@@ -18,27 +18,36 @@
 
         <div class="info">
 
-            <p>
+            {% if game_data.is_free %}
 
-                <strong>
-                    {{ translation['game_price'] }}
-                </strong>:
+                <strong>{{ translation['game_final_price'] }}</strong>:
+                {{ translation['free_game'] }}
 
-                {% if game_data.is_free %}
+            {% elif game_data.not_launched %}
 
-                    {{translation['free_game']}}
+                <strong>{{ translation['release_date'] }}</strong>:
+                {{ game_data.release_date }}
 
-                {% elif game_data.not_launched %}
+            {% else %}
 
-                    ???
+                <p>
+                    <strong>{{ translation['game_price'] }}</strong>:
+                    {% if game_data.discount_percent != '0%' %}
 
-                {% else %}
+                        <s>{{ game_data.initial_price }}</s> -
+                        
+                        {{ game_data.final_price }} - 
 
-                    {{ game_data.price }}
+                        {{ translation['game_discount' ]}} {{ game_data.discount_percent }} 
 
-                {% endif %}
+                    {% else %}
 
-            </p>
+                        {{ game_data.final_price }}
+
+                    {% endif %}
+                </p>
+
+            {% endif %}
 
             <p>
 
