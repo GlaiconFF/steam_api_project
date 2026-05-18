@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template, request, session, redirect
+from flask import Blueprint, render_template, request, session, redirect, jsonify
 from .services.steam_api import choose_game, search_game, search_game_with_tags
 from . import steam_tags_cache
 
@@ -32,7 +32,8 @@ translations = {
         "tracked_games": "Tracked Games",
         "select_all_tags": "Select All",
         "remove_all_tags": "Remove All",
-        "recommended_games": "Recommended Games"
+        "recommended_games": "Recommended Games",
+        "no_recommended_games": "No games found with these tags"
     },
     "brazilian": {
         "search_placeholder": "Pesquisar jogo",
@@ -55,7 +56,8 @@ translations = {
         "tracked_games": "Jogos Rastreados",
         "select_all_tags": "Selecionar Todos",
         "remove_all_tags": "Remover Todos",
-        "recommended_games": "Jogos Recomendados"
+        "recommended_games": "Jogos Recomendados",
+        "no_recommended_games": "Nenhum jogo encontrado com esses marcadores"
     },
     "spanish": {
         "search_placeholder": "Buscar juego",
@@ -78,7 +80,8 @@ translations = {
         "tracked_games": "Juegos Rastreados",
         "select_all_tags": "Seleccionar Todas",
         "remove_all_tags": "Eliminar Todas",
-        "recommended_games": "Juegos Recomendados"
+        "recommended_games": "Juegos Recomendados",
+        "no_recommended_games": "No se encontraron juegos con estas etiquetas"
     }
 }
 
@@ -134,6 +137,11 @@ def home():
 @main.route("/toggle_tag/<int:tag_id>")
 def toggle_tag(tag_id):
 
+    language = session.get(
+        "language",
+        "english"
+    )
+
     selected = session.get(
         "selected_tags",
         []
@@ -147,20 +155,15 @@ def toggle_tag(tag_id):
 
         if len(selected) >= 5:
 
-            return {
+            return jsonify({
                 "error": "limit"
-            }
+            })
 
         selected.append(tag_id)
 
     session["selected_tags"] = selected
 
-    language = session.get(
-        "language",
-        "english"
-    )
-
-    selected_tags_data = []
+    tags = []
 
     for selected_tag_id in selected:
 
@@ -168,17 +171,15 @@ def toggle_tag(tag_id):
             language
         ].get(selected_tag_id)
 
-        if tag_name:
+        tags.append({
+            "id": selected_tag_id,
+            "name": tag_name
+        })
 
-            selected_tags_data.append({
-                "id": selected_tag_id,
-                "name": tag_name
-            })
-
-    return {
+    return jsonify({
         "count": len(selected),
-        "tags": selected_tags_data
-    }
+        "tags": tags
+    })
 
 
 @main.route("/search")
@@ -268,3 +269,23 @@ def set_all_tags(action):
     session.modified = True
 
     return "", 204
+
+@main.route("/recommended_games_data")
+def recommended_games_data():
+
+    selected_tags = session.get(
+        "selected_tags",
+        []
+    )
+
+    tags_to_search = ",".join(
+        map(str, selected_tags)
+    )
+
+    recommended_games = (
+        search_game_with_tags(
+            tags_to_search
+        )
+    )
+
+    return jsonify(recommended_games)

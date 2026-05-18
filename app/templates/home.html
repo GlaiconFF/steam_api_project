@@ -9,37 +9,56 @@
 
     {% endif %}
 
-    {% if recommended_games %}
+    <input
+        type="hidden"
+        id="no_games_text"
+        value="{{ translation['no_recommended_games'] }}"
+    >
+
+    <div id="recommended_section">
 
         <h3 class="recommended_title">
             {{ translation['recommended_games'] }}
         </h3>
 
-        <div class="recommended_games">
+        <div
+            class="recommended_games"
+            id="recommended_games"
+        >
 
-        {% for game_id, game_data in recommended_games.items() %}
+            {% if recommended_games %}
 
-            <a
-                href="/show_game/{{ game_id }}"
-                class="recommended_game_card"
-            >
+                {% for game_id, game_data in recommended_games.items() %}
 
-                <img
-                    src="{{ game_data.image }}"
-                    alt="{{ game_data.name }}"
-                >
+                    <a
+                        href="/show_game/{{ game_id }}"
+                        class="recommended_game_card"
+                    >
 
-                <span>
-                    {{ game_data.name }}
-                </span>
+                        <img
+                            src="{{ game_data.image }}"
+                            alt="{{ game_data.name }}"
+                        >
 
-            </a>
+                        <span>
+                            {{ game_data.name }}
+                        </span>
 
-        {% endfor %}
+                    </a>
+
+                {% endfor %}
+
+            {% else %}
+
+                <p class="no_recommended_games">
+                    {{ translation['no_recommended_games'] }}
+                </p>
+
+            {% endif %}
 
         </div>
 
-    {% endif %}
+    </div>
 
 {% endblock %}
 
