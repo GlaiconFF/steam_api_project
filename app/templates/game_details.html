@@ -19,15 +19,15 @@
         <div class="info">
 
             {% if game_data.is_free %}
-
-                <strong>{{ translation['game_final_price'] }}</strong>:
-                {{ translation['free_game'] }}
-
+                <p>
+                    <strong>{{ translation['game_final_price'] }}</strong>:
+                    {{ translation['free_game'] }}
+                </p>
             {% elif game_data.not_launched %}
-
-                <strong>{{ translation['release_date'] }}</strong>:
-                {{ game_data.release_date }}
-
+                <p>
+                    <strong>{{ translation['release_date'] }}</strong>:
+                    {{ game_data.release_date }}
+                </p>
             {% else %}
 
                 <p>
