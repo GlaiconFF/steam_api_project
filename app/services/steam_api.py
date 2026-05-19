@@ -149,6 +149,7 @@ def search_game(game_id, language="english", currency="en"):
         game_supported_languages = game_supported_languages.split("<b")[0]
 
     game_dict = {
+        "id": game_id,
         "header_image": game_header_image,
         "name": game_name,
         "description": game_description,

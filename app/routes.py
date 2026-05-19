@@ -1,4 +1,5 @@
 from flask import Blueprint, render_template, request, session, redirect, jsonify
+from .services.tracked_games import toggle_tracked_game, is_game_tracked
 from .services.steam_api import choose_game, search_game, search_game_with_tags
 from . import steam_tags_cache
 
@@ -226,7 +227,9 @@ def show_game(id):
             "name": game_tag
         })
 
-    return render_template("game_details.html", game_data=game_data)
+    tracked = is_game_tracked(id)
+
+    return render_template("game_details.html", game_data=game_data, tracked=tracked)
 
 @main.route("/set_language/<language>")
 def set_language(language):
@@ -283,3 +286,16 @@ def recommended_games_data():
     )
 
     return jsonify(recommended_games)
+
+@main.route("/track_game", methods=["POST"])
+def track_game():
+
+    data = request.get_json()
+
+    game_id = data.get("game_id")
+
+    tracked = toggle_tracked_game(game_id)
+
+    return jsonify({
+        "tracked": tracked
+    })

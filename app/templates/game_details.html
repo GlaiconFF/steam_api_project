@@ -101,7 +101,18 @@
 
             </p>
 
-            <button>Track Game</button>
+        <button
+            id="track-button"
+            data-game-id="{{ game_data.id }}"
+        >
+
+            {% if tracked %}
+                Tracked
+            {% else %}
+                Track Game
+            {% endif %}
+
+        </button>
 
         </div>
 
@@ -140,6 +151,41 @@
 <script>
 
 setupTags()
+
+const trackButton = document.getElementById('track-button')
+
+trackButton.addEventListener('click', async () => {
+
+    const gameId = trackButton.dataset.gameId
+
+    const response = await fetch('/track_game', {
+
+        method: 'POST',
+
+        headers: {
+            'Content-Type': 'application/json'
+        },
+
+        body: JSON.stringify({
+            game_id: gameId
+        })
+
+    })
+
+    const data = await response.json()
+
+    if (data.tracked) {
+
+        trackButton.textContent = 'Tracked'
+
+    } else {
+
+        trackButton.textContent = 'Track Game'
+
+    }
+
+})
+
 
 </script>
 
